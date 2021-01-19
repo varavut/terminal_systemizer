@@ -1,7 +1,7 @@
 #!/system/bin/sh
 # Terminal Magisk Mod Template
 # by veez21 @ xda-developers
-
+# Android 11 support by KreAch3R @xda-developers
 
 # Magisk Module ID **
 ID="terminal_systemizer"
@@ -123,7 +123,8 @@ list_installed_apps() {
         app=${i##*/}
         package=$app
         package[c]=$package
-        dir_app[c]=/data/app/$app-*/base.apk
+        [ $API -le 30 ] && dir_app[c]=/data/app/$app-*/base.apk
+        [ $API -ge 30 ] && dir_app[c]=/data/app/*/$package-*/base.apk
         $use_aapt && { app=$(aapt d badging ${dir_app[c]} | grep 'application-label:'); app=${app#*:}; }
         app1[c]=$(echo "$app" | tr ' ' '_' | tr -d "'")
         echo "app${c}^=${app1[c]}^=${dir_app[c]}^=${package[c]}^=" >> $LISTFILE
