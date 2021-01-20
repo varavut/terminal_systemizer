@@ -1,7 +1,7 @@
 #!/system/bin/sh
 # Terminal Magisk Mod Template
 # by veez21 @ xda-developers
-# Android 11 support by KreAch3R @xda-developers
+# Android 11 support by KreAch3R, jenslody @xda-developers
 
 # Magisk Module ID **
 ID="terminal_systemizer"
@@ -313,7 +313,9 @@ enter_apk_name() {
   else
     installdir="app"
   fi
-  systemize /system/$installdir /data/app/${apklabel}-*/base.apk
+  [ $API -lt 30 ] && app_path="/data/app/${apklabel}-*/base.apk"
+  [ $API -ge 30 ] && app_path="/data/app/*/${apklabel}-*/base.apk"
+  systemize /system/$installdir "$app_path"
   [ $? -ne 0 ] && abort "Failed!"
 }
 
@@ -557,7 +559,9 @@ menu() {
 case "$1" in
   -a) shift
     for i in "$@"; do
-	  [ -d $SYSTEM/priv-app ] && systemize /system/priv-app "/data/app/${i}-*/base.apk" || systemize /system/app "/data/app/${i}-*/base.apk" "$i"
+          [ $API -lt 30 ] && app_path="/data/app/${i}-*/base.apk"
+          [ $API -ge 30 ] && app_path="/data/app/*/${i}-*/base.apk"
+	  [ -d $SYSTEM/priv-app ] && systemize /system/priv-app "$app_path" || systemize /system/app "$app_path" "$i"
 	  echo "$div"
 	done
 	exit;;
