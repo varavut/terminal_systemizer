@@ -49,6 +49,7 @@ Options:
     -nc                    removes ANSI escape codes
     -f                     use 'Set SELinux' in the session for faster app listing
     -a [package name]      systemizes the package name(s) provided
+    -p [package name]      systemizes the package name(s) provided to priv-app only
     -d [apk dir]           systemizes the apk(s) provided
     -l                     list all systemized apps
     -h                     show this message
@@ -562,6 +563,14 @@ case "$1" in
           [ $API -lt 30 ] && app_path="/data/app/${i}-*/base.apk"
           [ $API -ge 30 ] && app_path="/data/app/*/${i}-*/base.apk"
 	  [ -d $SYSTEM/priv-app ] && systemize /system/priv-app "$app_path" || systemize /system/app "$app_path" "$i"
+	  echo "$div"
+	done
+	exit;;
+  -p) shift
+    for i in "$@"; do
+          [ $API -lt 30 ] && app_path="/data/app/${i}-*/base.apk"
+          [ $API -ge 30 ] && app_path="/data/app/*/${i}-*/base.apk"
+	  [ -d $SYSTEM/priv-app ] && systemize /system/priv-app "$app_path"
 	  echo "$div"
 	done
 	exit;;
