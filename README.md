@@ -20,9 +20,10 @@ or
 
 ## Changelog
 
+### v17.4.4
+* Add -r option
 ### v17.4.1
 * More Android 11 support by jenslody
-
 ### v17.4
 * Android 11 support
 ### v17.3.1
