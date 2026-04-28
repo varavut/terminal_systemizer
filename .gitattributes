@@ -3,4 +3,4 @@ META-INF/** text eol=lf
 *.prop text eol=lf
 *.sh text eol=lf
 *.md text eol=lf
-system/bin/systemize text eol=lf
+system/xbin/systemize text eol=lf
